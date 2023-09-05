@@ -158,10 +158,10 @@ class Attachment extends Model
 
         $file_dir .= $i.DIRECTORY_SEPARATOR;
 
-        if (strlen($content)) {
-            Storage::disk(self::$disk)->put($file_path, $content);
-        } else {
+        if ($uploaded_file) {
             $uploaded_file->storeAs(self::DIRECTORY.DIRECTORY_SEPARATOR.$file_dir, $file_name, ['disk' => self::$disk]);
+        } else {
+            Storage::disk(self::$disk)->put($file_path, $content);
         }
 
         \Helper::sanitizeUploadedFileData($file_path, \Helper::getPrivateStorage(), $content);
