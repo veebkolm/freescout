@@ -138,18 +138,10 @@ class ReplyToCustomer extends Mailable
                     ->text('emails/customer/reply_fancy_text');
 
         if ($thread->has_attachments) {
-            foreach ($thread->attachments as $attachment) {
-                $attachment = (new Attachment())->fill([
-                    "thread_id" => $attachment->thread_id,
-                    "user_id" => $attachment->user_id,
-                    "file_dir" => $attachment->file_dir,
-                    "file_name" => $attachment->file_name,
-                    "mime_type" => $attachment->mime_type,
-                    "type" => $attachment->type,
-                    "size" => $attachment->size,
-                    "embedded" => $attachment->embedded,
-                    "public" => $attachment->public,
-                ]);
+            foreach ($thread->attachments as $attachmentData) {
+                $attachment = (new Attachment());
+                $attachment->file_dir = $attachmentData->file_dir;
+                $attachment->file_name = $attachmentData->file_name;
                 if ($attachment->fileExists()) {
                     $fileContent = Storage::disk($attachment->getDisk())->get($attachment->getStorageFilePath());
                     $message->attachData($fileContent, $attachment->fileName, [
