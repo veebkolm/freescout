@@ -149,7 +149,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'daily'), // by default logs for 5 days are kept
+    'log' => env('APP_LOG', 'single'), // by default logs for 5 days are kept
 
     'log_level' => env('APP_LOG_LEVEL', 'error'),
 
@@ -268,7 +268,7 @@ return [
     | The list should be in sync with /storage/app/public/uploads/.htaccess and nginx config.
     |-------------------------------------------------------------------------
     */
-    'viewable_attachments'    => env('APP_VIEWABLE_ATTACHMENTS') 
+    'viewable_attachments'    => env('APP_VIEWABLE_ATTACHMENTS')
                                 ? explode(',', env('APP_VIEWABLE_ATTACHMENTS'))
                                 : ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp', 'apng', 'bmp', 'gif', 'ico', 'cur', 'png', 'tif', 'tiff', 'webp', 'pdf', 'txt', 'diff', 'patch', 'json', 'mp3', 'wav', 'ogg', 'wma'],
 
@@ -434,9 +434,9 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Use this option if you have many folders and you are experiencing
-    | performance issues. When this option is enabled sometimes it may take 
+    | performance issues. When this option is enabled sometimes it may take
     | several seconds for folders counters to update in the interface.
-    | 
+    |
     | https://github.com/freescout-helpdesk/freescout/pull/2982
     |-------------------------------------------------------------------------
     */
@@ -444,7 +444,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Experimental feature allowing to specify users who can see only conversations 
+    | Experimental feature allowing to specify users who can see only conversations
     | assigned to themselves. For such users only Mine folder shows actual number of conversations.
     | This option does not affect admin users.
     |
