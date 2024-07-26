@@ -3,7 +3,7 @@
         'name' => 'freescout-helpdesk/freescout',
         'pretty_version' => 'dev-add-s3-support',
         'version' => 'dev-add-s3-support',
-        'reference' => '41e2e5d3bc3b408d002b99aef449b33bbea22b80',
+        'reference' => '6eb13077269f9d58acd78f071b3f01724973bd87',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -250,7 +250,7 @@
         'freescout-helpdesk/freescout' => array(
             'pretty_version' => 'dev-add-s3-support',
             'version' => 'dev-add-s3-support',
-            'reference' => '41e2e5d3bc3b408d002b99aef449b33bbea22b80',
+            'reference' => '6eb13077269f9d58acd78f071b3f01724973bd87',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
