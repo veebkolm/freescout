@@ -138,6 +138,7 @@ class ReplyToCustomer extends Mailable
 
         if ($thread->has_attachments) {
             foreach ($thread->attachments as $attachment) {
+                $attachment = $attachment->first();
                 if ($attachment->fileExists()) {
                     $fileContent = Storage::disk($attachment->getDisk())->get($attachment->fileName);
                     $message->attachData($fileContent, $attachment->fileName, [
