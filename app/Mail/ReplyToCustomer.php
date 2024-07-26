@@ -140,9 +140,9 @@ class ReplyToCustomer extends Mailable
             foreach ($thread->attachments as $attachment) {
                 $attachment = $attachment->first();
                 if ($attachment->fileExists()) {
-                    $fileContent = Storage::disk($attachment->getDisk())->get($attachment->fileName);
+                    $fileContent = Storage::disk(config('filesystems.attachments'))->get($attachment->fileName);
                     $message->attachData($fileContent, $attachment->fileName, [
-                        'mime' => Storage::disk($attachment->getDisk())->mimeType($attachment->fileName),
+                        'mime' => Storage::disk(config('filesystems.attachments'))->mimeType($attachment->fileName),
                     ]);
                 } else {
                     \Log::error('[ReplyToCustomer] Thread: '.$thread->id.'. Attachment file not find on disk: '.$attachment->getLocalFilePath());
