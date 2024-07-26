@@ -142,7 +142,7 @@ class ReplyToCustomer extends Mailable
                 if ($attachment->fileExists()) {
                     $path = Attachment::DIRECTORY.DIRECTORY_SEPARATOR.$attachment->file_dir.$attachment->file_name;
                     $fileContent = Storage::disk(config('filesystems.attachments'))->get($path);
-                    $message->attachData($fileContent, $attachment->fileName, [
+                    $message->attachData($fileContent, $attachment->file_name, [
                         'mime' => Storage::disk(config('filesystems.attachments'))->mimeType($path),
                     ]);
                 } else {
