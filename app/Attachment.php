@@ -160,7 +160,7 @@ class Attachment extends Model
 
         try {
             if ($uploaded_file) {
-                $uploaded_file->storeAs(self::DIRECTORY.DIRECTORY_SEPARATOR.$file_dir, $file_name, ['disk' => self::DISK]);
+                $uploaded_file->storeAs(self::DIRECTORY.DIRECTORY_SEPARATOR.$file_dir, $file_name, ['disk' => self::$disk]);
             } else {
                 Storage::disk(self::$disk)->put($file_path, $content);
             }
