@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Attachment;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Mail\Mailer as MailerContract;
 use Illuminate\Mail\Mailable;
@@ -138,14 +139,14 @@ class ReplyToCustomer extends Mailable
 
         if ($thread->has_attachments) {
             foreach ($thread->attachments as $attachment) {
-                $attachment = $attachment->first();
+                $attachment = Attachment::find($attachment['id']);
                 if ($attachment->fileExists()) {
-                    $fileContent = Storage::disk(config('filesystems.attachments'))->get($attachment->fileName);
+                    $fileContent = Storage::disk($attachment->getDisK())->get($attachment->getStorageFilePath());
                     $message->attachData($fileContent, $attachment->fileName, [
-                        'mime' => Storage::disk(config('filesystems.attachments'))->mimeType($attachment->fileName),
+                        'mime' => Storage::disk($attachment->getDisK())->mimeType($attachment->getStorageFilePath()),
                     ]);
                 } else {
-                    \Log::error('[ReplyToCustomer] Thread: '.$thread->id.'. Attachment file not find on disk: '.$attachment->getLocalFilePath());
+                    \Log::error('[ReplyToCustomer] Thread: '.$thread->id.'. Attachment file not find on disk: '.$attachment->getStorageFilePath());
                 }
             }
         }
