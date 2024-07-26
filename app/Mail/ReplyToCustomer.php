@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Mail\Mailer as MailerContract;
 use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Storage;
 
 // https://medium.com/@guysmilez/queuing-mailables-with-custom-headers-in-laravel-5-4-ab615f022f17
 //abstract class AbstractMessage extends Mailable
@@ -138,7 +139,10 @@ class ReplyToCustomer extends Mailable
         if ($thread->has_attachments) {
             foreach ($thread->attachments as $attachment) {
                 if ($attachment->fileExists()) {
-                    $message->attach($attachment->getLocalFilePath());
+                    $fileContent = Storage::disk($attachment->getDisk())->get($attachment->fileName);
+                    $message->attachData($fileContent, $attachment->fileName, [
+                        'mime' => Storage::disk($attachment->getDisk())->mimeType($attachment->fileName),
+                    ]);
                 } else {
                     \Log::error('[ReplyToCustomer] Thread: '.$thread->id.'. Attachment file not find on disk: '.$attachment->getLocalFilePath());
                 }
