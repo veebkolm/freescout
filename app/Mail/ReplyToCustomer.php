@@ -139,11 +139,11 @@ class ReplyToCustomer extends Mailable
 
         if ($thread->has_attachments) {
             foreach ($thread->attachments as $attachment) {
-                $attachment = Attachment::find($attachment['id']);
+                $attachment = Attachment::findOrFail($attachment['id']);
                 if ($attachment->fileExists()) {
-                    $fileContent = Storage::disk($attachment->getDisK())->get($attachment->getStorageFilePath());
+                    $fileContent = Storage::disk($attachment->getDisk())->get($attachment->getStorageFilePath());
                     $message->attachData($fileContent, $attachment->fileName, [
-                        'mime' => Storage::disk($attachment->getDisK())->mimeType($attachment->getStorageFilePath()),
+                        'mime' => Storage::disk($attachment->getDisk())->mimeType($attachment->getStorageFilePath()),
                     ]);
                 } else {
                     \Log::error('[ReplyToCustomer] Thread: '.$thread->id.'. Attachment file not find on disk: '.$attachment->getStorageFilePath());
