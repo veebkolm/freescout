@@ -138,14 +138,12 @@ class ReplyToCustomer extends Mailable
                     ->text('emails/customer/reply_fancy_text');
 
         if ($thread->has_attachments) {
-            foreach ($thread->attachments as $attachmentData) {
-                $attachment = (new Attachment());
-                $attachment->file_dir = $attachmentData->file_dir;
-                $attachment->file_name = $attachmentData->file_name;
+            foreach ($thread->attachments as $attachment) {
                 if ($attachment->fileExists()) {
-                    $fileContent = Storage::disk($attachment->getDisk())->get($attachment->getStorageFilePath());
+                    $path = Attachment::DIRECTORY.DIRECTORY_SEPARATOR.$attachment->file_dir.$attachment->file_name;
+                    $fileContent = Storage::disk(config('filesystems.attachments'))->get($path);
                     $message->attachData($fileContent, $attachment->fileName, [
-                        'mime' => Storage::disk($attachment->getDisk())->mimeType($attachment->getStorageFilePath()),
+                        'mime' => Storage::disk(config('filesystems.attachments'))->mimeType($path),
                     ]);
                 } else {
                     \Log::error('[ReplyToCustomer] Thread: '.$thread->id.'. Attachment file not find on disk: '.$attachment->getStorageFilePath());
